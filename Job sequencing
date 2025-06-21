@@ -1,0 +1,30 @@
+class Solution {
+  public:
+  bool static compare(pair<int,int>&a,pair<int,int>&b){
+      return a.first>b.first;
+  };
+    vector<int> jobSequencing(vector<int> &deadline, vector<int> &profit) {
+        // code here
+        vector<pair<int,int>>arr;
+        int n=deadline.size();
+        
+        for(int i=0;i<n;i++){
+            arr.push_back({profit[i],deadline[i]});
+        }
+        sort(arr.begin(),arr.end(),compare);
+        vector<int>hash(n+1,-1);
+        int cnt=0,p=0;
+        for(int i=0;i<n;i++){
+            int dead=arr[i].second;
+            while(dead>=1 && hash[dead]>=0){
+                dead--;
+            }
+            if(dead>=1 && hash[dead]<0){
+                hash[dead]=arr[i].second;
+                cnt++;
+                p+=arr[i].first;
+            }
+        }
+        return {cnt,p};
+    }
+};
