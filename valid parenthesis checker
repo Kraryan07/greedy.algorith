@@ -1,3 +1,4 @@
+part 1
 class Solution {
 public:
     bool checkValidString(string s) {
@@ -22,3 +23,29 @@ public:
         return (min==0);
     }
 };
+
+part2 brute force using recursion
+class Solution {
+public:
+  bool ispossible(string s,int cnt,int ind){
+    if(cnt<0) return false;
+    if(ind==s.size()){
+        return (cnt==0);
+    }
+
+    if(s[ind]=='('){
+       return ispossible(s,cnt+1,ind+1);
+    }
+    else if(s[ind]==')'){
+        return ispossible(s,cnt-1,ind+1);
+    }
+    else{
+        return (ispossible(s,cnt+1,ind+1)||ispossible(s,cnt-1,ind+1)||ispossible(s,cnt,ind+1));
+    }
+  }
+    bool checkValidString(string s) {
+        int cnt=0;
+        return ispossible(s,cnt,0);
+    }
+};
+
